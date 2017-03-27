@@ -1,27 +1,16 @@
-local RolledItems = {}
-RolledItems[InstanceID] = {
-	{ItemID = "123456", poster="Xerephine", winner="Shalsoul"},
-	{ItemID = "234567", poster="Nagisa", winner="Snow"},
-	{ItemID = "345678", poster="Kerbaal", winner="Aiska"},
-	{ItemID = "456789", poster="Jumji"}
-}
-
 local instanceID = 555666
 local countedLoot = nil
 
 local rolledStuff = {
-	itemID, dispatcher = {uniqueKey, itemLink, name}, winner = {uniqueKey, name}, rolls = {name, rolled, maxroll}
+	itemID, allocation = {itemLink, dispatcher, winner}, rolls = {name, rolled, maxroll}
 }
 
 rolledStuff[instanceID] = {
 	{
 		999999,
 		{
-			{ "Hash from itemLink & name", "|cXXXXXXXX|", "Kerbaal-DieAldor" },
-			{ "Hash from itemLink & name", "|cXXXXXXXX|", "Tyurru-DieAldor" }
-		},
-		{ 
-			{ "Hash from itemLink & name", "Aiska-DieAldor" }
+			{ "|cXXXXXXXX|", "Kerbaal-DieAldor", "Aiska-DieAldor" },
+			{ "|cXXXXXXXX|", "Tyurru-DieAldor" }
 		},
 		{
 			{ "Squip-DieAldor", 35, 50},
@@ -33,7 +22,7 @@ rolledStuff[instanceID] = {
 function printDispatcher(ID)
 	local i = 1
 	while rolledStuff[ID][1][2][i] do
-		print(rolledStuff[ID][1][2][i][3])
+		print(rolledStuff[ID][1][2][i][2])
 		i = i + 1
 	end
 end
