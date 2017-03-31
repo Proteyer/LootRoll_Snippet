@@ -10,17 +10,30 @@ local countedLoot = nil
 
 local rolledStuff = {} --itemID, allocation = {itemLink, lootMaster, dispatcher, winner}, rolls = {name, rolled, maxroll}
 
-rolledStuff[instanceID] = {}
-rolledStuff[instanceID][999999] = {}
-rolledStuff[instanceID][999999][1] = {}
-rolledStuff[instanceID][999999][1][1] = { "|cXXXXXXXX|", "Kerbaal-DieAldor", "Aiska-DieAldor" }
-rolledStuff[instanceID][999999][1][2] = { "|cZZZZZZZZ|", "Luretta-DieAldor", "Xere-DieAldor" }
-rolledStuff[instanceID][999999][2] = {}
-rolledStuff[instanceID][999999][2][1] = { "Squip-DieAldor", 35, 50 }
-
-rolledStuff[instanceID][666666] = {
-{ "|cYYYYYYYY|", "Snow-DieAldor", }, { "Jumji-DieAldor", 35, 50}
+rolledStuff[555666] = {
+	[999999] = {
+		["allocation"] = {
+			{ "Nagisa-DieAldor", "Kerbaal-DieAldor", "|cXXXXXXXX|", "Aiska-DieAldor" },
+			{ "Nagisa-DieAldor", "Tyurru-DieAldor", "|cYYYYYYY|", "Squip-DieAldor"}
+		},
+		["rolls"] = {
+			{ "Aiska-DieAldor", 78, 100 },
+			{ "Cassadora-DieAldor", 18, 25 },
+			{ "Jumji-DieAldor", 9, 50 },
+			{ "Squip-DieAldor", 12, 50 }
+		}
+	}
 }
+
+function printDispatcher(tab)
+	local i = 1
+	while i <= #tab do
+		print(tab[i][2])
+		i = i + 1
+	end
+end
+printDispatcher(rolledStuff[instanceID][itemID].allocation)
+-- printDispatcher(rolledStuff[instanceID][itemID]["allocation"])
 
 function splitRollingGroups(roller)
 	local i, j, a, b = 1, 1, 1, 1
