@@ -51,8 +51,8 @@ function splitRollingGroups(roller)
 		i = i + 1
 	end
 end
-print(rolledStuff[instanceID][itemID][2][1][1])
-splitRollingGroups(rolledStuff[instanceID][itemID][2])
+
+splitRollingGroups(rolledStuff[instanceID][itemID].rolls)
 
 table.sort(mainNeed, function(a, b) return a[2] > b[2] end)
 table.sort(secondNeed, function(a, b) return a[2] > b[2] end)
