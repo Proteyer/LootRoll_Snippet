@@ -78,3 +78,19 @@ PrintResult()
 <23:30:23> "Kerbaal": 2. tablle: id => liste von rolls
 <23:30:32> "Kerbaal": roll: name, rollNumber, max
 <23:34:04> "Kerbaal": { 1 => {roll1, roll2, roll3}, 2 =}]]
+
+function GetInstanceID() 
+-- Idee mittels GetInstanceInfo() Namen und Schwierigkeit ermitteln und dann über GetSavedInstanceInfo(index) vergleich um die ID zu ermitteln
+-- Über GetSavedInstanceInfo(index) in dauer von GetNumSavedInstances() iterieren bis man die ID gefunden hat
+	local instanceName, type, difficultyIndex, instanceDifficultyName, instanceMaxPlayers, dynamicDifficulty, isDynamic, mapID = GetInstanceInfo()
+	local numInstances = GetNumSavedInstances()
+	for i = 1, numInstances do
+		local savedInstanceName, id, reset, difficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, savedInstanceDifficultyName, numEncounters, encounterProgress = GetSavedInstanceInfo(i)
+		if savedInstanceName == instanceName and savedInstanceDifficultyName == instanceDifficultyName then	
+			return id
+		end
+		i = i + 1
+	end
+end
+x = GetInstanceID()
+print(GetInstanceID())
