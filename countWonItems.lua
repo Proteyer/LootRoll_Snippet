@@ -1,3 +1,69 @@
+instanceID = 10001
+rolledStuff = {}
+
+HereticItem = {}
+HereticItemList = {}
+
+HereticItemList.__index = HereticItemList
+function HereticItemList:New(instanceID, master, entries)
+	local obj = {
+	instanceID = instanceID,
+	master = master,
+	entries = {},
+	}
+	setmetatable(obj, self)
+	return obj
+end
+
+HereticItem.__index = HereticItem
+function HereticItem:New(itemLink, donator, winner, rollActionID)
+	local obj = {
+	itemLink = itemLink or "",
+	donator = donator or "",
+	winner = winner or {},
+	rollActionID = rollActionID or 0,
+	}
+	setmetatable(obj, self)
+	return obj
+end
+
+function HereticItemList:EntryTest()
+	for i = 1, 2 do
+		newObj = HereticItemList:New(10000+i, "Nagisa-DieAldor")
+		for j = 1, 5 do
+			newEntry = HereticItem:New("Link"..i*j, "Donator"..j, {"Name"..j,j,j+j},"RollID"..j)
+			table.insert(newObj.entries, newEntry)
+		end
+		table.insert(rolledStuff, newObj)
+		for k,v in ipairs(newObj.entries) do
+			print(v.itemLink .. " posted by " .. v.donator .. " rolledID: " .. v.rollActionID)
+		end
+	end
+end
+
+function GetWonCount(name, roll, maxRoll)
+	local count = 0
+	for i = 1, #rolledStuff do
+		if rolledStuff[i].instanceID == instanceID then
+			for j = 1, #rolledStuff[i].entries do
+				if name == rolledStuff[i].entries[j].winner[1] and
+				maxRoll == rolledStuff[i].entries[j].winner[3] then
+					count = count + 1
+				end
+			end
+		end
+	end
+	return count
+end
+
+HereticItemList:EntryTest()
+print(rolledStuff[1].instanceID)
+print(#rolledStuff)
+print(rolledStuff[1].entries[1].winner[1])
+print(rolledStuff[1].entries[1].winner[3])
+print(GetWonCount("Name1", 50, 100))
+
+--[[
 local instanceID = 555666
 local itemID = 999999
 local encounterID = 778899
@@ -67,4 +133,4 @@ end
 
 
 printDispatcher(rolledStuff[instanceID].encounter[1].items[1].allocation)
-print(rolledStuff[instanceID].encounter[1].items[1].allocation)
+print(rolledStuff[instanceID].encounter[1].items[1].allocation) ]]
