@@ -94,3 +94,77 @@ function GetInstanceID()
 end
 x = GetInstanceID()
 print(GetInstanceID())
+---------- Items connected to Rolls ID -------
+--[[
+HereticRollActions = {}
+HereticLootSequence = {}
+HereticRoll = {}
+HereticList = {}
+HereticItem = {}
+
+HereticList.__index = HereticList
+function HereticList:New(instanceID, master)
+	local obj = {
+	instanceID = instanceID,
+	instanceMapID = 0,
+	instanceDifficulty = "",
+	encounterID = 0,
+	master = master,
+	entries = {}
+	}
+	setmetatable(obj, self)
+	return obj
+end
+
+HereticRoll.__index = HereticRoll
+function HereticRoll:New(name, roll, maxRoll)
+	local obj = {
+	name = name,
+	roll = roll,
+	maxRoll = maxRoll,
+	wonCount = 0 or 0
+	}
+	setmetatable(obj, self)
+	return obj
+end
+
+HereticItem.__index = HereticItem
+function HereticItem:New(itemLink, donator, winner, rollActionID)
+	local obj = {
+	itemLink = itemLink or "",
+	donator = donator or "",
+	winner = winner or {},
+	rollActionID = rollActionID or 0,
+	}
+	setmetatable(obj, self)
+	return obj
+end
+
+function HereticList:Test()
+	for i = 1, 2 do
+		local newItemList = HereticList:New(10000+i, "Nagisa-DieAldor")
+		for j = 1, 5 do 
+			local newItem = HereticItem:New("c|X" .. j, "Donator" .. j, "Winner" .. j, j)
+			table.insert(newItemList.entries, newItem)
+			local newRollList = HereticList:New(10000+i, "Nagisa-DieAldor")
+			newRollList.itemLink = "c|X" .. j
+			for k = 1, 3 do
+				local newRoll = HereticRoll:New("Roller" .. k, k+k, 100)
+				table.insert(newRollList.entries, newRoll)
+			end
+			table.insert(HereticRollActions, newRollList)
+		end
+		table.insert(HereticLootSequence, newItemList)
+	end
+end
+
+HereticList:Test()
+for i = 1, #HereticLootSequence do
+	for k,v in ipairs(HereticLootSequence[i].entries) do
+		print(v.itemLink .. " from " .. v.donator .. " won by " .. v.winner .. " by rollAction: " .. v.rollActionID)
+		for key,value in ipairs(HereticRollActions[v.rollActionID].entries) do
+			print(value.name .. " rolled " .. value.roll .. " from " .. value.maxRoll)
+		end
+	end
+end
+]]
