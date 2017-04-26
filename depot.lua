@@ -193,4 +193,28 @@ function GetLootSequence(instanceID, master, mapID, difficultyID)
   table.insert(lootSequences, 1, newLootSequence)
   return lootSequences[1] -- alternatively we can return directly newLootSequence
 end
+
+--------------
+function GetCurrentInstance()
+	local instanceName, type, instanceDifficultyIndex, ... = GetInstanceInfo()
+	local mapID = GetCurrentMapAreaID()
+	local instanceID = nil
+	local numInstances = GetNumSavedInstances()
+	for i = 1, numInstances do
+		local savedInstanceName, id, reset, savedInstanceDifficulty, ... = GetSavedInstanceInfo(i)
+		if savedInstanceName == instanceName and savedInstanceDifficulty == instanceDifficultyIndex then	
+			return instanceID = id
+		end
+	end
+	return instanceID, mapID, difficultyIndex
+end
+
+function MapIDToString(mapID)
+	return GetMapNameByID(mapID)
+end
+
+function DifficultyIDToString(difficultyID)
+	difficultyName, ... = GetDifficultyInfo(difficultyID)
+	return
+end
 ]]
