@@ -167,4 +167,30 @@ for i = 1, #HereticLootSequence do
 		end
 	end
 end
+
+
+function GetLootSequence(instanceID, master, mapID, difficultyID)
+  function LootSequenceExist(instanceID)
+    for i = 1, #lootSequences do
+      if lootSequences[i].intanceID == instanceID
+        return i
+      end
+  end
+  end
+  if not instanceID do
+    for i = 1, #lootSequences do
+      if lootSequences[i].mapID == mapID and lootSequences[i].difficultyID == difficultyID and lootSequences[i].master == master  do
+        lootSequences[i].intanceID = instanceID
+        return lootSequences[i]
+      end
+    end
+  end
+  local check = LootSequenceExist(instanceID)
+  if check do
+    return lootSequences[check]
+  end
+  local newLootSequence = HereticList:New(instanceID, master, mapID, difficultyID)
+  table.insert(lootSequences, 1, newLootSequence)
+  return lootSequences[1] -- alternatively we can return directly newLootSequence
+end
 ]]
